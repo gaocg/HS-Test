@@ -59,7 +59,6 @@ class CanvasIndex extends React.Component{
         const event = window.event;
         const X =  w|| event.layerX, Y = event.layerY || sessionStorage.getItem("Y") ;//鼠标悬浮点相对于canvas左上角的坐标
         const ctx = this.refs.moveLine.getContext("2d");
-        console.log(X)
         ctx.clearRect(0,0,600,300);
         ctx.setLineDash([5,5]);
         ctx.beginPath(); //开始绘制路径
