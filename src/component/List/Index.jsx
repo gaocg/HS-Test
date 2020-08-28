@@ -60,32 +60,38 @@ function Index(){
             sessionStorage.setItem("selectIndex",selectIndex);//更新下标
             
             document.getElementsByClassName("list-tr")[selectIndex].getElementsByClassName("ant-col")[0].click();
-            const selectDomTop = document.getElementsByClassName("selected")[0].offsetTop;//选中元素距离文档最上方高度
-            const scrollHeight = document.documentElement.scrollTop;//文档卷起的高度
-            const clientHeight = document.documentElement.clientHeight;//页面可视区高度
-            if(selectDomTop -  scrollHeight > clientHeight -50 ){
-                scrollMoive();
-            }
+
+            scrollMoive(keyCode);
         }
     },[])
     useEffect(()=>{   
-        if(list.length > 3000){ setLoading(false); return }
+        if(list.length > 300){ setLoading(false); return }
         insertData();
     },[list])
 
     //键盘选中事件导致选中项不在可视区域时，手动实现滚动条滑动
-    const scrollMoive = ( ) => {
-        const move = ()=> setTimeout(()=>{
+    const scrollMoive = (keyCode) => {
+        const move = (keyCode)=> {
             const selectDomTop = document.getElementsByClassName("selected")[0].offsetTop;//选中元素距离文档最上方高度
             const scrollHeight = document.documentElement.scrollTop;//文档卷起的高度
             const clientHeight = document.documentElement.clientHeight;//页面可视区高度
-         if(selectDomTop -  scrollHeight < 10 ){
-                return ;
+            if(keyCode === 38){
+                if( selectDomTop -  scrollHeight < 10 ){
+                    window.scrollBy(0,-30);
+                }else if(selectDomTop -  scrollHeight > clientHeight -50){
+                    return ;
+                }
+               
             }
-            window.scrollBy(0,30);
-            move(); 
-        },20)
-        move();
+            if(keyCode === 40 ){
+                if(selectDomTop -  scrollHeight < 10 ){
+                    return ;
+                }else if(selectDomTop -  scrollHeight > clientHeight -50 ){
+                    window.scrollBy(0,30);
+                }
+            }
+        }
+        move(keyCode);
     }
 
     //获得子组件点击元素的下标
