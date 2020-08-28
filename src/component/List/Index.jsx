@@ -58,14 +58,16 @@ function Index(){
                 selectIndex < l ? selectIndex++ : selectIndex = l;
             }
             sessionStorage.setItem("selectIndex",selectIndex);//更新下标
-            
-            document.getElementsByClassName("list-tr")[selectIndex].getElementsByClassName("ant-col")[0].click();
+            if(selectIndex <= document.getElementsByClassName("list-tr").length ){
+                document.getElementsByClassName("list-tr")[selectIndex].getElementsByClassName("ant-col")[0].click();
+            }
+            //document.getElementsByClassName("list-tr")[selectIndex].getElementsByClassName("ant-col")[0].click();
 
             scrollMoive(keyCode);
         }
     },[])
     useEffect(()=>{   
-        if(list.length > 300){ setLoading(false); return }
+        if(list.length > 3000){ setLoading(false);  return }
         insertData();
     },[list])
 
